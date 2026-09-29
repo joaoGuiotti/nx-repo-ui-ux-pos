@@ -2,14 +2,14 @@
 
 ## 1. Backend: Dependências e DTO de Contrato
 
-- [ ] 1.1 Instalar dependências `class-validator` e `class-transformer` no monorepo e verificar sucesso da instalação no `package.json`
-- [ ] 1.2 Configurar o `ValidationPipe` global com `whitelist: true` em `apps/api/src/main.ts`
-- [ ] 1.3 Criar o DTO `CreateSpeakerDto` em `apps/api/src/app/cfp/dto/create-speaker.dto.ts` implementando o contrato `SpeakerDTO` importado de `@cfp-plataform/shared-types` com decorators de validação (`@IsString`, `@IsEmail`, `@IsNotEmpty`, `@IsBoolean`)
+- [x] 1.1 Instalar dependências `class-validator` e `class-transformer` no monorepo e verificar sucesso da instalação no `package.json`
+- [x] 1.2 Configurar o `ValidationPipe` global com `whitelist: true` em `apps/api/src/main.ts`
+- [x] 1.3 Criar o DTO `CreateSpeakerDto` em `apps/api/src/app/cfp/dto/create-speaker.dto.ts` implementando o contrato `SpeakerDTO` importado de `@cfp-plataform/shared-types` com decorators de validação (`@IsString`, `@IsEmail`, `@IsNotEmpty`, `@IsBoolean`)
 
 ## 2. Backend: Controller, Service e Testes Unitários
 
-- [ ] 2.1 Implementar `CfpService` e `CfpController` em `apps/api/src/app/cfp/` expondo `POST /api/cfp` com `@Body()` e registrar no `AppModule`
-- [ ] 2.2 Criar suíte de testes unitários com Jest em `apps/api/src/app/cfp/cfp.controller.spec.ts` validando o recebimento de payload válido e garantindo rejeição com 400 Bad Request em payloads inválidos (e.g., e-mail inválido, nome ausente)
+- [x] 2.1 Implementar `CfpService` e `CfpController` em `apps/api/src/app/cfp/` expondo `POST /api/cfp` com `@Body()` e registrar no `AppModule`
+- [x] 2.2 Criar suíte de testes unitários com Jest em `apps/api/src/app/cfp/cfp.controller.spec.ts` validando o recebimento de payload válido e garantindo rejeição com 400 Bad Request em payloads inválidos (e.g., e-mail inválido, nome ausente)
 
 ## 3. Frontend: Componente Standalone com Signals e WAI-ARIA
 
@@ -25,5 +25,5 @@
 
 ## 5. Verificação e Validação
 
-- [ ] 5.1 Executar a suíte de testes unitários da API (`nx test api`) e verificar que todos os testes passaram
+- [x] 5.1 Executar a suíte de testes unitários da API (`nx test api`) e verificar que todos os testes passaram
 - [ ] 5.2 Executar a suíte de testes unitários do Frontend (`nx test frontend`) e verificar que todos os testes passaram
