@@ -1,22 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSpeakerDto } from './dto/create-speaker.dto';
 import { SpeakerDTO } from '@cfp-plataform/shared-types';
-import { randomUUID } from 'crypto';
+import { CreateSpeakerDto } from './dto/create-speaker.dto';
 
 @Injectable()
 export class CfpService {
   private readonly submissions: SpeakerDTO[] = [];
 
-  create(dto: CreateSpeakerDto): SpeakerDTO {
+  create(createSpeakerDto: CreateSpeakerDto): SpeakerDTO {
     const speaker: SpeakerDTO = {
-      ...dto,
-      id: dto.id || randomUUID(),
+      ...createSpeakerDto,
+      id: createSpeakerDto.id || Date.now().toString(),
     };
     this.submissions.push(speaker);
     return speaker;
   }
 
   findAll(): SpeakerDTO[] {
-    return [...this.submissions];
+    return this.submissions;
   }
 }

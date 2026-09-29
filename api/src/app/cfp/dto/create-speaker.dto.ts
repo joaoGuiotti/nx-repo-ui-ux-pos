@@ -8,20 +8,21 @@ import {
 } from 'class-validator';
 
 export class CreateSpeakerDto implements SpeakerDTO {
-  @IsString()
   @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   id!: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'O nome é obrigatório' })
+  @IsNotEmpty()
   nome!: string;
 
-  @IsEmail({}, { message: 'Informe um e-mail válido' })
-  @IsNotEmpty({ message: 'O e-mail é obrigatório' })
+  @IsEmail()
+  @IsNotEmpty()
   email!: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'O título da palestra é obrigatório' })
+  @IsNotEmpty()
   talkTitle!: string;
 
   @IsBoolean()
