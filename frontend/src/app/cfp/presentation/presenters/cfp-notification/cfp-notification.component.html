@@ -1,0 +1,41 @@
+<div
+  role="alert"
+  aria-live="polite"
+  class="w-full max-w-xl mx-auto mb-6 p-4 rounded-lg border flex items-start gap-3 shadow-sm transition-all duration-200"
+  [class.bg-feedback-success-bg]="type() === 'success'"
+  [class.border-feedback-success]="type() === 'success'"
+  [class.text-feedback-success]="type() === 'success'"
+  [class.bg-feedback-error-bg]="type() === 'error'"
+  [class.border-feedback-error]="type() === 'error'"
+  [class.text-feedback-error]="type() === 'error'"
+>
+  <div class="flex-shrink-0 mt-0.5" aria-hidden="true">
+    @if (type() === 'success') {
+      <svg lucideCheckCircle2 [size]="20"></svg>
+    } @else {
+      <svg lucideAlertCircle [size]="20"></svg>
+    }
+  </div>
+
+  <div class="flex-1 min-w-0">
+    @if (title()) {
+      <h3 class="text-sm font-semibold mb-0.5">
+        {{ title() }}
+      </h3>
+    }
+    <p class="text-sm leading-normal">
+      {{ message() }}
+    </p>
+  </div>
+
+  @if (dismissible()) {
+    <button
+      type="button"
+      (click)="onDismiss()"
+      class="flex-shrink-0 p-1 rounded hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-opacity"
+      aria-label="Fechar notificação"
+    >
+      <svg lucideX [size]="16" aria-hidden="true"></svg>
+    </button>
+  }
+</div>

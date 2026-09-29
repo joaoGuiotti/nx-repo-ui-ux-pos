@@ -1,0 +1,39 @@
+<main class="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+  <div class="w-full max-w-xl">
+    <!-- Success Feedback Notification -->
+    @if (lastSubmittedSpeaker(); as speaker) {
+      <app-cfp-notification
+        type="success"
+        title="Proposta enviada com sucesso!"
+        [message]="'A proposta \'' + speaker.talkTitle + '\' do palestrante ' + speaker.nome + ' foi cadastrada.'"
+        (dismissed)="onDismissNotification()"
+      />
+    }
+
+    <!-- Error Feedback Notification -->
+    @if (submissionError(); as errorMsg) {
+      <app-cfp-notification
+        type="error"
+        title="Erro na submissão"
+        [message]="errorMsg"
+        (dismissed)="onDismissNotification()"
+      />
+    }
+
+    <!-- CFP Form (Dumb Presenter) -->
+    <app-cfp-form
+      [nome]="nome()"
+      [email]="email()"
+      [talkTitle]="talkTitle()"
+      [isGDE]="isGDE()"
+      [isSubmitting]="isSubmitting()"
+      [fieldErrors]="fieldErrors()"
+      [touchedFields]="touchedFields()"
+      [isFormValid]="isFormValid()"
+      (inputChanged)="onInputChanged($event)"
+      (fieldTouched)="onFieldTouched($event)"
+      (gdeChanged)="onGDEChanged($event)"
+      (formSubmitted)="onFormSubmitted()"
+    />
+  </div>
+</main>
