@@ -11,20 +11,20 @@ export class CreateSpeakerDto implements SpeakerDTO {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  id: string;
+  id!: string;
 
   @IsString()
   @IsNotEmpty()
-  nome: string;
+  nome!: string;
 
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
-  talkTitle: string;
+  talkTitle!: string;
 
   @IsBoolean()
-  isGDE: boolean;
+  isGDE!: boolean;
 }

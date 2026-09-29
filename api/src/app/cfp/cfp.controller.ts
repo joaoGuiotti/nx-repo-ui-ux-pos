@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { SpeakerDTO } from '@cfp-plataform/shared-types';
 import { CfpService } from './cfp.service';
 import { CreateSpeakerDto } from './dto/create-speaker.dto';
@@ -11,5 +11,10 @@ export class CfpController {
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createSpeakerDto: CreateSpeakerDto): SpeakerDTO {
     return this.cfpService.create(createSpeakerDto);
+  }
+
+  @Get()
+  findAll(): SpeakerDTO[] {
+    return this.cfpService.findAll();
   }
 }

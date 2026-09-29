@@ -1,0 +1,158 @@
+<section class="w-full max-w-xl mx-auto p-8 rounded-lg bg-surface shadow-md border border-border" aria-labelledby="cfp-title">
+  <header class="mb-8">
+    <h2 id="cfp-title" class="text-2xl font-bold text-text-primary tracking-tight mb-2">
+      Submissão de Proposta (Call for Papers)
+    </h2>
+    <p class="text-sm text-text-secondary leading-normal">
+      Preencha os dados abaixo para submeter sua palestra ao comitê avaliador.
+    </p>
+  </header>
+
+  <form (submit)="onFormSubmit($event)" class="space-y-6" novalidate>
+    <fieldset class="border-0 p-0 m-0 space-y-5">
+      <legend class="sr-only">Dados do Palestrante</legend>
+
+      <!-- Nome Completo -->
+      <div class="flex flex-col">
+        <label for="cfp-nome" class="flex items-center gap-1.5 font-medium mb-2 text-text-primary text-sm">
+          <svg lucideUser [size]="16" aria-hidden="true" class="shrink-0"></svg>
+          <span>Nome Completo</span>
+          <span class="text-feedback-error font-bold" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="cfp-nome"
+          name="nome"
+          type="text"
+          class="w-full px-4 py-2 border rounded-md text-base text-text-primary bg-input-bg border-border transition-colors duration-150 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-text-muted"
+          [class.border-feedback-error]="isFieldTouchedAndInvalid('nome')"
+          [class.focus:ring-feedback-error/25]="isFieldTouchedAndInvalid('nome')"
+          [value]="nome()"
+          (input)="onFieldInput('nome', $event)"
+          (blur)="onFieldBlur('nome')"
+          aria-required="true"
+          [attr.aria-invalid]="isFieldTouchedAndInvalid('nome')"
+          aria-describedby="cfp-nome-error"
+          autocomplete="name"
+          placeholder="Ex: João Silva"
+        />
+        <span
+          id="cfp-nome-error"
+          role="alert"
+          aria-live="polite"
+          class="text-xs text-feedback-error mt-1 min-h-[1.25rem] flex items-center"
+        >
+          @if (isFieldTouchedAndInvalid('nome')) {
+            {{ fieldErrors()['nome'] }}
+          }
+        </span>
+      </div>
+
+      <!-- E-mail -->
+      <div class="flex flex-col">
+        <label for="cfp-email" class="flex items-center gap-1.5 font-medium mb-2 text-text-primary text-sm">
+          <svg lucideMail [size]="16" aria-hidden="true" class="shrink-0"></svg>
+          <span>E-mail</span>
+          <span class="text-feedback-error font-bold" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="cfp-email"
+          name="email"
+          type="email"
+          class="w-full px-4 py-2 border rounded-md text-base text-text-primary bg-input-bg border-border transition-colors duration-150 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-text-muted"
+          [class.border-feedback-error]="isFieldTouchedAndInvalid('email')"
+          [class.focus:ring-feedback-error/25]="isFieldTouchedAndInvalid('email')"
+          [value]="email()"
+          (input)="onFieldInput('email', $event)"
+          (blur)="onFieldBlur('email')"
+          aria-required="true"
+          [attr.aria-invalid]="isFieldTouchedAndInvalid('email')"
+          aria-describedby="cfp-email-error"
+          autocomplete="email"
+          placeholder="Ex: joao@email.com"
+        />
+        <span
+          id="cfp-email-error"
+          role="alert"
+          aria-live="polite"
+          class="text-xs text-feedback-error mt-1 min-h-[1.25rem] flex items-center"
+        >
+          @if (isFieldTouchedAndInvalid('email')) {
+            {{ fieldErrors()['email'] }}
+          }
+        </span>
+      </div>
+
+      <!-- Título da Palestra -->
+      <div class="flex flex-col">
+        <label for="cfp-talkTitle" class="flex items-center gap-1.5 font-medium mb-2 text-text-primary text-sm">
+          <svg lucideMic [size]="16" aria-hidden="true" class="shrink-0"></svg>
+          <span>Título da Palestra</span>
+          <span class="text-feedback-error font-bold" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="cfp-talkTitle"
+          name="talkTitle"
+          type="text"
+          class="w-full px-4 py-2 border rounded-md text-base text-text-primary bg-input-bg border-border transition-colors duration-150 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-text-muted"
+          [class.border-feedback-error]="isFieldTouchedAndInvalid('talkTitle')"
+          [class.focus:ring-feedback-error/25]="isFieldTouchedAndInvalid('talkTitle')"
+          [value]="talkTitle()"
+          (input)="onFieldInput('talkTitle', $event)"
+          (blur)="onFieldBlur('talkTitle')"
+          aria-required="true"
+          [attr.aria-invalid]="isFieldTouchedAndInvalid('talkTitle')"
+          aria-describedby="cfp-talkTitle-error"
+          placeholder="Ex: Arquitetura Moderna com Angular Signals"
+        />
+        <span
+          id="cfp-talkTitle-error"
+          role="alert"
+          aria-live="polite"
+          class="text-xs text-feedback-error mt-1 min-h-[1.25rem] flex items-center"
+        >
+          @if (isFieldTouchedAndInvalid('talkTitle')) {
+            {{ fieldErrors()['talkTitle'] }}
+          }
+        </span>
+      </div>
+
+      <!-- Google Developer Expert -->
+      <div class="flex items-center pt-2">
+        <label for="cfp-isGDE" class="flex items-center gap-2.5 cursor-pointer text-text-primary select-none text-base">
+          <input
+            id="cfp-isGDE"
+            name="isGDE"
+            type="checkbox"
+            class="w-5 h-5 cursor-pointer accent-primary rounded focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            [checked]="isGDE()"
+            (change)="onGDEChange($event)"
+          />
+          <span class="text-sm font-medium">Google Developer Expert (GDE)</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- Ações do Formulário -->
+    <div class="pt-4">
+      <button
+        type="submit"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-md font-semibold text-base text-on-primary bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all min-h-[44px] disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-disabled disabled:text-on-disabled active:scale-95"
+        [disabled]="!isFormValid() || isSubmitting()"
+        [attr.aria-busy]="isSubmitting()"
+      >
+        @if (isSubmitting()) {
+          <svg
+            lucideLoaderCircle
+            [size]="18"
+            class="animate-spin shrink-0"
+            aria-hidden="true"
+          ></svg>
+          <span>Enviando proposta...</span>
+        } @else {
+          <svg lucideSend [size]="18" aria-hidden="true" class="shrink-0"></svg>
+          <span>Submeter Proposta</span>
+        }
+      </button>
+    </div>
+  </form>
+</section>
