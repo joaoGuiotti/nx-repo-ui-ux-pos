@@ -5,7 +5,13 @@
   "scripts": {
     "start": "nx run-many --target=serve --all",
     "front": "nx serve frontend",
-    "api": "nx serve api"
+    "api": "nx serve api",
+    "test": "nx run-many -t test",
+    "test:front": "nx test frontend",
+    "test:api": "nx test api",
+    "test:e2e": "playwright test --config=apps/frontend-e2e/playwright.config.mts",
+    "test:e2e:ui": "playwright test --config=apps/frontend-e2e/playwright.config.mts --ui",
+    "test:e2e:api": "nx run api-e2e:e2e"
   },
   "private": true,
   "devDependencies": {

@@ -19,7 +19,7 @@
     "strict": false,
     "paths": {
       "@cfp-plataform/shared-types": [
-        "./shared-types/src/index.ts"
+        "./libs/shared-types/src/index.ts"
       ]
     }
   },

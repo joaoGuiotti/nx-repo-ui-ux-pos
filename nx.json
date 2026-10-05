@@ -89,7 +89,7 @@
         "targetName": "test"
       },
       "exclude": [
-        "api-e2e/**/*"
+        "apps/api-e2e/**/*"
       ]
     }
   ],
