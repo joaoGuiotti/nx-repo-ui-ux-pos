@@ -1,6 +1,6 @@
 # CFP Platform — Nx Monorepo Portfolio
 
-[![CI & CD (GitHub Pages)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
+[![Frontend CI & CD](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
 [![Demo Online](https://img.shields.io/badge/Demo-GitHub%20Pages-indigo)](https://joaoGuiotti.github.io/nx-repo-ui-ux-pos/)
 
 Monorepo Nx contendo a plataforma **Call for Papers (CFP)**, composta por um frontend em Angular 21+ com Arquitetura Hexagonal e uma API em NestJS.

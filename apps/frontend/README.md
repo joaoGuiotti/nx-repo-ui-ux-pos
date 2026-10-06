@@ -1,6 +1,6 @@
 # Call for Papers (CFP) Platform — Frontend
 
-[![CI & CD (GitHub Pages)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
+[![Frontend CI & CD](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
 [![Demo Online](https://img.shields.io/badge/Demo-GitHub%20Pages-indigo)](https://joaoGuiotti.github.io/nx-repo-ui-ux-pos/)
 
 Aplicação frontend moderna em Angular 21+ utilizando Arquitetura Hexagonal, Signals, Tailwind CSS e suíte de testes com Vitest dentro de um monorepo Nx.
