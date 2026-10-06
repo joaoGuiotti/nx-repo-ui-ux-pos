@@ -34,8 +34,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint & Test Frontend
-        run: npx nx run-many -t lint test -p frontend
+      - name: Lint, Test & Build API & Frontend
+        run: npx nx run-many -t lint test build -p frontend api
 
       - name: Build Frontend for Production (GitHub Pages)
         run: npx nx build frontend --configuration=production --base-href=/${{ github.event.repository.name }}/
