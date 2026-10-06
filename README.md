@@ -1,6 +1,6 @@
 # CFP Platform — Nx Monorepo Portfolio
 
-[![Frontend CI & CD](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
+[![CI](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml/badge.svg)](https://github.com/joaoGuiotti/nx-repo-ui-ux-pos/actions/workflows/ci.yml)
 [![Demo Online](https://img.shields.io/badge/Demo-GitHub%20Pages-indigo)](https://joaoGuiotti.github.io/nx-repo-ui-ux-pos/)
 
 Monorepo Nx contendo a plataforma **Call for Papers (CFP)**, composta por um frontend em Angular 21+ com Arquitetura Hexagonal e uma API em NestJS.
@@ -21,7 +21,27 @@ nx-repo-ui-ux-pos/
 ### 🔗 Documentação das Aplicações
 
 - 🎨 **[Frontend Documentation (Angular)](file:///c:/DEV/github/nx-repo-ui-ux-pos/apps/frontend/README.md)**: Detalhes da arquitetura hexagonal, estado reativo com Signals, suíte de testes com Vitest e acessibilidade.
-- ⚙️ **[API (NestJS)](apps/api)**: Endpoints REST (`POST /api/cfp`, `GET /api/cfp`) e validação via `class-validator`.
+- ⚙️ **[API (NestJS)](apps/api)**: Endpoints REST (`POST /api/cfp`, `GET /api/cfp`, `GET /api/health`) e validação via `class-validator`.
+
+---
+
+## 🔄 CI/CD & Pipeline Automático
+
+O repositório utiliza **GitHub Actions** com workflows modulares e filtragem de alteração por aplicação:
+
+```mermaid
+flowchart TD
+    A["Trigger: PR ou Push na main"] --> B["ci.yml: Lint, Test & Build (Frontend & API)"]
+    B --> C{"Push na main & CI Verde?"}
+    C -->|Não (PR)| D["Fim (CI Concluído)"]
+    C -->|Sim| E{"Quais apps mudaram?"}
+    E -->|apps/frontend alterado| F["deploy-frontend.yml: Deploy para GitHub Pages"]
+    E -->|apps/api alterado| G["deploy-api.yml: Trigger Deploy Hook no Render"]
+```
+
+- **CI (`ci.yml`)**: Executa lint, teste unitário e build das duas aplicações.
+- **Deploy Frontend (`deploy-frontend.yml`)**: Compila a versão de produção com base-href para GitHub Pages quando `apps/frontend` sofrer alteração.
+- **Deploy API (`deploy-api.yml`)**: Dispara o Deploy Hook no Render quando `apps/api` sofrer alteração.
 
 ---
 
@@ -77,4 +97,4 @@ npx nx graph
 - **Monorepo**: Nx 23+
 - **Frontend**: Angular 21+, Signals, Tailwind CSS v3, Lucide Icons, Vitest
 - **Backend**: NestJS 11+, TypeScript Strict
-- **CI/CD**: GitHub Actions + GitHub Pages
+- **CI/CD**: GitHub Actions + GitHub Pages + Render

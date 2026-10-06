@@ -1,0 +1,54 @@
+name: Deploy Frontend (GitHub Pages)
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-frontend-pages:
+    name: Build & Deploy Frontend to Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Frontend for Production (GitHub Pages)
+        run: npx nx build frontend --configuration=production --base-href=/${{ github.event.repository.name }}/
+
+      - name: Create SPA 404 Fallback
+        run: cp dist/apps/frontend/browser/index.html dist/apps/frontend/browser/404.html
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/apps/frontend/browser
+
+      - name: Deploy Frontend to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
