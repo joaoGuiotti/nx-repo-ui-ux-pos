@@ -1,0 +1,26 @@
+name: Deploy API (Render)
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-api-render:
+    name: Trigger Render Deploy Hook
+    runs-on: ubuntu-latest
+    environment:
+      name: production-api
+    concurrency:
+      group: render-api-deploy
+      cancel-in-progress: false
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: |
+          if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
+            echo "::error::RENDER_DEPLOY_HOOK_URL secret não está configurado no GitHub Secrets."
+            exit 1
+          fi
+          curl -s -f -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"

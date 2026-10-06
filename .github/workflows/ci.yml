@@ -1,4 +1,4 @@
-name: Frontend CI & CD (GitHub Pages)
+name: CI
 
 on:
   push:
@@ -8,22 +8,37 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: 'pages'
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  frontend-ci:
-    name: Frontend CI (Lint, Test, Build)
+  ci:
+    name: Lint, Test & Build (Frontend & API)
     runs-on: ubuntu-latest
+    outputs:
+      frontend_changed: ${{ steps.changes.outputs.frontend }}
+      api_changed: ${{ steps.changes.outputs.api }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Detect changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            frontend:
+              - 'apps/frontend/**'
+              - 'package*.json'
+              - 'nx.json'
+            api:
+              - 'apps/api/**'
+              - 'package*.json'
+              - 'nx.json'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,27 +52,15 @@ jobs:
       - name: Lint, Test & Build API & Frontend
         run: npx nx run-many -t lint test build -p frontend api
 
-      - name: Build Frontend for Production (GitHub Pages)
-        run: npx nx build frontend --configuration=production --base-href=/${{ github.event.repository.name }}/
+  deploy-frontend:
+    name: Deploy Frontend
+    needs: ci
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push' && needs.ci.outputs.frontend_changed == 'true'
+    uses: ./.github/workflows/deploy-frontend.yml
 
-      - name: Create SPA 404 Fallback
-        run: cp dist/apps/frontend/browser/index.html dist/apps/frontend/browser/404.html
-
-      - name: Upload GitHub Pages Artifact
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/apps/frontend/browser
-
-  deploy-frontend-pages:
-    name: Deploy Frontend to GitHub Pages
-    needs: frontend-ci
-    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy Frontend to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  deploy-api:
+    name: Deploy API
+    needs: ci
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push' && needs.ci.outputs.api_changed == 'true'
+    uses: ./.github/workflows/deploy-api.yml
+    secrets: inherit
