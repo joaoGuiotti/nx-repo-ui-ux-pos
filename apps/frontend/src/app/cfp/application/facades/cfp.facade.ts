@@ -44,7 +44,11 @@ export class CfpFacade {
   }
 
   submitProposal(): Observable<Speaker> | null {
-    if (!this.store.isFormValid() || this.store.isSubmitting() || this.store.status() === 'submitting') {
+    if (
+      !this.store.isFormValid() ||
+      this.store.isSubmitting() ||
+      this.store.status() === 'submitting'
+    ) {
       return null;
     }
 
@@ -65,8 +69,7 @@ export class CfpFacade {
     return this.repository.submitProposal(speaker).pipe(
       tap({
         next: (saved) => this.store.setSubmitted(saved),
-        error: (err) =>
-          this.store.setError(err.message || 'Erro ao submeter proposta.'),
+        error: (err) => this.store.setError(err.message || 'Erro ao submeter proposta.'),
       })
     );
   }
@@ -79,4 +82,3 @@ export class CfpFacade {
     this.store.reset();
   }
 }
-

@@ -16,11 +16,7 @@ describe('CfpFacade (Application)', () => {
     };
 
     TestBed.configureTestingModule({
-      providers: [
-        CfpSignalStore,
-        CfpFacade,
-        { provide: CfpRepository, useValue: mockRepository },
-      ],
+      providers: [CfpSignalStore, CfpFacade, { provide: CfpRepository, useValue: mockRepository }],
     });
 
     facade = TestBed.inject(CfpFacade);

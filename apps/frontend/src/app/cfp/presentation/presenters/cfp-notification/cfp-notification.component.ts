@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
-import {
-  LucideAlertCircle,
-  LucideCheckCircle2,
-  LucideX,
-} from '@lucide/angular';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { LucideAlertCircle, LucideCheckCircle2, LucideX } from '@lucide/angular';
 
 export type NotificationType = 'success' | 'error' | 'info';
 

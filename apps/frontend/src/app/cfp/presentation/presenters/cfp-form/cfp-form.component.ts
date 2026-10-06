@@ -1,20 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
-import {
-  LucideLoaderCircle,
-  LucideMail,
-  LucideMic,
-  LucideSend,
-  LucideUser,
-} from '@lucide/angular';
-import {
-  CfpField,
-  CfpFieldInputEvent,
-} from '../../../domain/entities/cfp-form.types';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { LucideLoaderCircle, LucideMail, LucideMic, LucideSend, LucideUser } from '@lucide/angular';
+import { CfpField, CfpFieldInputEvent } from '../../../domain/entities/cfp-form.types';
 
 /**
  * Dumb Presenter component — 100% visual.

@@ -11,8 +11,8 @@ export const cfpRoutes: Route[] = [
     path: '',
     providers: provideCfp(),
     loadComponent: () =>
-      import(
-        './presentation/containers/cfp-form-page/cfp-form-page.component'
-      ).then((m) => m.CfpFormPageComponent),
+      import('./presentation/containers/cfp-form-page/cfp-form-page.component').then(
+        (m) => m.CfpFormPageComponent
+      ),
   },
 ];

@@ -8,7 +8,10 @@ import { SpeakerApiDTO } from '../http/cfp.dtos';
 import { environment } from '../../../../environments/environment';
 
 export class CfpDomainError extends Error {
-  constructor(message: string, public readonly status?: number) {
+  constructor(
+    message: string,
+    public readonly status?: number
+  ) {
     super(message);
     this.name = 'CfpDomainError';
   }
