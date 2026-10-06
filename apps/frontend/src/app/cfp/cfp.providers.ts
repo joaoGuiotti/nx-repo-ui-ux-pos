@@ -3,7 +3,7 @@ import { CfpFacade } from './application/facades/cfp.facade';
 import { CfpRepository } from './domain/ports/cfp.repository';
 import { CfpHttpAdapter } from './infrastructure/adapters/cfp-http.adapter';
 import { CfpInMemoryAdapter } from './infrastructure/adapters/cfp-in-memory.adapter';
-import { CfpSignalStore } from './infrastructure/state/cfp.signal-store';
+import { CfpSignalStore } from './application/state/cfp.signal-store';
 
 interface CfpProvidersOptions {
   withMock: boolean;

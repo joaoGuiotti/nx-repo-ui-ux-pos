@@ -2,13 +2,15 @@ import { Injectable, computed, signal } from '@angular/core';
 import { Speaker } from '../../domain/entities/speaker.entity';
 import { CfpField } from '../../domain/entities/cfp-form.types';
 
+export type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
+
 export interface CfpState {
   readonly id: string;
   readonly nome: string;
   readonly email: string;
   readonly talkTitle: string;
   readonly isGDE: boolean;
-  readonly isSubmitting: boolean;
+  readonly status: SubmissionStatus;
   readonly touchedFields: Record<string, boolean>;
   readonly lastSubmittedSpeaker: Speaker | null;
   readonly submissionError: string | null;
@@ -20,7 +22,7 @@ const initialState: CfpState = {
   email: '',
   talkTitle: '',
   isGDE: false,
-  isSubmitting: false,
+  status: 'idle',
   touchedFields: {},
   lastSubmittedSpeaker: null,
   submissionError: null,
@@ -40,7 +42,8 @@ export class CfpSignalStore {
   readonly email = computed(() => this.state().email);
   readonly talkTitle = computed(() => this.state().talkTitle);
   readonly isGDE = computed(() => this.state().isGDE);
-  readonly isSubmitting = computed(() => this.state().isSubmitting);
+  readonly status = computed(() => this.state().status);
+  readonly isSubmitting = computed(() => this.state().status === 'submitting');
   readonly touchedFields = computed(() => this.state().touchedFields);
   readonly lastSubmittedSpeaker = computed(() => this.state().lastSubmittedSpeaker);
   readonly submissionError = computed(() => this.state().submissionError);
@@ -85,13 +88,16 @@ export class CfpSignalStore {
   }
 
   setSubmitting(isSubmitting: boolean): void {
-    this.state.update((s) => ({ ...s, isSubmitting }));
+    this.state.update((s) => ({
+      ...s,
+      status: isSubmitting ? 'submitting' : 'idle',
+    }));
   }
 
   setSubmitted(speaker: Speaker): void {
     this.state.update((s) => ({
       ...s,
-      isSubmitting: false,
+      status: 'success',
       lastSubmittedSpeaker: speaker,
       submissionError: null,
     }));
@@ -100,7 +106,7 @@ export class CfpSignalStore {
   setError(error: string): void {
     this.state.update((s) => ({
       ...s,
-      isSubmitting: false,
+      status: 'error',
       submissionError: error,
     }));
   }
@@ -108,6 +114,7 @@ export class CfpSignalStore {
   clearNotification(): void {
     this.state.update((s) => ({
       ...s,
+      status: 'idle',
       lastSubmittedSpeaker: null,
       submissionError: null,
     }));

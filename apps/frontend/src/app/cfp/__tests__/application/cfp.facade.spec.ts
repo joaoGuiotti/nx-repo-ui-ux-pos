@@ -3,7 +3,7 @@ import { firstValueFrom, of } from 'rxjs';
 import { vi } from 'vitest';
 import { CfpFacade } from '../../application/facades/cfp.facade';
 import { CfpRepository } from '../../domain/ports/cfp.repository';
-import { CfpSignalStore } from '../../infrastructure/state/cfp.signal-store';
+import { CfpSignalStore } from '../../application/state/cfp.signal-store';
 import { Speaker } from '../../domain/entities/speaker.entity';
 
 describe('CfpFacade (Application)', () => {
