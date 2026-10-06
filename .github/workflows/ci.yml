@@ -56,6 +56,10 @@ jobs:
     name: Deploy Frontend
     needs: ci
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push' && needs.ci.outputs.frontend_changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     uses: ./.github/workflows/deploy-frontend.yml
 
   deploy-api:
