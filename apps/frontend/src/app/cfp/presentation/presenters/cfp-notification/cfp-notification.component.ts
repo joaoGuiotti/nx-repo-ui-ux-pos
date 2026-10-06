@@ -25,7 +25,6 @@ export type NotificationType = 'success' | 'error' | 'info';
   imports: [LucideCheckCircle2, LucideAlertCircle, LucideX],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cfp-notification.component.html',
-  styleUrl: './cfp-notification.component.scss',
 })
 export class CfpNotificationComponent {
   /* ── Inputs ── */

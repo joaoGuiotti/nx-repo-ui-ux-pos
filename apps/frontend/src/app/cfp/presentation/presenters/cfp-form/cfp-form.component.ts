@@ -31,7 +31,6 @@ import {
   imports: [LucideUser, LucideMail, LucideMic, LucideSend, LucideLoaderCircle],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cfp-form.component.html',
-  styleUrl: './cfp-form.component.scss',
 })
 export class CfpFormComponent {
   /* ── Inputs (state from Container) ── */
@@ -78,9 +77,23 @@ export class CfpFormComponent {
     this.gdeChanged.emit(target.checked);
   }
 
-  /** Intercepts form submission and delegates to Container. */
+  /** Intercepts form submission, focuses first invalid field if invalid, and delegates to Container. */
   onFormSubmit(event: Event): void {
     event.preventDefault();
+
+    if (!this.isFormValid()) {
+      const fields: CfpField[] = ['nome', 'email', 'talkTitle'];
+      fields.forEach((f) => this.fieldTouched.emit(f));
+
+      const errors = this.fieldErrors();
+      const firstInvalidField = fields.find((f) => Boolean(errors[f]));
+      if (firstInvalidField) {
+        const el = document.getElementById(`cfp-${firstInvalidField}`);
+        el?.focus();
+      }
+      return;
+    }
+
     this.formSubmitted.emit();
   }
 }

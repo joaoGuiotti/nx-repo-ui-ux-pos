@@ -22,7 +22,6 @@ import { CfpNotificationComponent } from '../../presenters/cfp-notification/cfp-
   imports: [CfpFormComponent, CfpNotificationComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cfp-form-page.component.html',
-  styleUrl: './cfp-form-page.component.scss',
 })
 export class CfpFormPageComponent {
   private readonly facade = inject(CfpFacade);
