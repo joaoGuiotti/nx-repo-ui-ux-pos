@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { CfpRepository } from '../../domain/ports/cfp.repository';
 import { Speaker } from '../../domain/entities/speaker.entity';
 import { CfpField } from '../../domain/entities/cfp-form.types';
-import { CfpSignalStore } from '../../infrastructure/state/cfp.signal-store';
+import { CfpSignalStore } from '../state/cfp.signal-store';
 
 /**
  * Facade coordinating CFP state and repository operations.
@@ -22,6 +22,7 @@ export class CfpFacade {
   readonly email = this.store.email;
   readonly talkTitle = this.store.talkTitle;
   readonly isGDE = this.store.isGDE;
+  readonly status = this.store.status;
   readonly isSubmitting = this.store.isSubmitting;
   readonly touchedFields = this.store.touchedFields;
   readonly fieldErrors = this.store.fieldErrors;
@@ -43,7 +44,11 @@ export class CfpFacade {
   }
 
   submitProposal(): Observable<Speaker> | null {
-    if (!this.store.isFormValid() || this.store.isSubmitting()) {
+    if (
+      !this.store.isFormValid() ||
+      this.store.isSubmitting() ||
+      this.store.status() === 'submitting'
+    ) {
       return null;
     }
 
@@ -64,8 +69,7 @@ export class CfpFacade {
     return this.repository.submitProposal(speaker).pipe(
       tap({
         next: (saved) => this.store.setSubmitted(saved),
-        error: (err) =>
-          this.store.setError(err.message || 'Erro ao submeter proposta.'),
+        error: (err) => this.store.setError(err.message || 'Erro ao submeter proposta.'),
       })
     );
   }

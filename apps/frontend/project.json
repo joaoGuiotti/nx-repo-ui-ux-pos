@@ -8,9 +8,7 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/frontend",
@@ -23,12 +21,16 @@
             "input": "apps/frontend/public"
           }
         ],
-        "styles": [
-          "apps/frontend/src/styles.scss"
-        ]
+        "styles": ["apps/frontend/src/styles.scss"]
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/frontend/src/environments/environment.ts",
+              "with": "apps/frontend/src/environments/environment.prod.ts"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",
@@ -54,9 +56,7 @@
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "defaultConfiguration": "development",
-      "dependsOn": [
-        "api:serve"
-      ],
+      "dependsOn": ["api:serve"],
       "options": {
         "proxyConfig": "apps/frontend/proxy.conf.json"
       },
@@ -74,8 +74,10 @@
     },
     "test": {
       "executor": "@angular/build:unit-test",
+      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
       "options": {
-        "watch": false
+        "watch": false,
+        "coverage": true
       }
     },
     "serve-static": {
