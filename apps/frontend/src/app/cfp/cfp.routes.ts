@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { cfpProviders } from './cfp.providers';
+import { provideCfp } from './cfp.providers';
 
 /**
  * Feature routes for CFP (Call for Papers).
@@ -9,7 +9,7 @@ import { cfpProviders } from './cfp.providers';
 export const cfpRoutes: Route[] = [
   {
     path: '',
-    providers: cfpProviders({ withMock: false }),
+    providers: provideCfp(),
     loadComponent: () =>
       import(
         './presentation/containers/cfp-form-page/cfp-form-page.component'
