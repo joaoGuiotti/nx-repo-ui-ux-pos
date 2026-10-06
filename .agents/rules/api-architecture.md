@@ -17,7 +17,7 @@ trigger: always_on
 ## Mapa de pastas (referência: módulo `cfp`)
 
 ```text
-📦 apps/api/src/app/cfp
+📦 apps/api/src/app/features/cfp
 ┣ 📂 __tests__                       # espelha a árvore (mesma convenção do front)
 ┣ 📂 domain
 ┃ ┣ 📂 entities    └ speaker.entity.ts, proposal.entity.ts

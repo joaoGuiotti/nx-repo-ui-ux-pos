@@ -29,7 +29,7 @@ A direção é sempre **para dentro**. `presentation` **nunca** importa de `infr
 ## 📂 Mapa de pastas (referência: feature `cfp`)
 
 ```text
-📦 apps/frontend/src/app
+📦 apps/frontend/src/app/features
 ┣ 📂 __tests__                       # testes do app shell (ex.: app.spec.ts)
 ┗ 📂 cfp
   ┣ 📂 __tests__                     # TODOS os testes da feature, espelhando a árvore

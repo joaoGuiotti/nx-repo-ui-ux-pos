@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { CfpRepository } from '../../domain/ports/cfp.repository';
+import { environment } from '../../../../../environments/environment';
 import { Speaker } from '../../domain/entities/speaker.entity';
-import { CfpMapper } from '../http/cfp.mapper';
+import { CfpRepository } from '../../domain/ports/cfp.repository';
 import { SpeakerApiDTO } from '../http/cfp.dtos';
-import { environment } from '../../../../environments/environment';
+import { CfpMapper } from '../http/cfp.mapper';
 
 export class CfpDomainError extends Error {
   constructor(

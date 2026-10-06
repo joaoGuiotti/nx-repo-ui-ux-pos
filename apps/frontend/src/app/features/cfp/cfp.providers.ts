@@ -1,10 +1,10 @@
 import { Provider } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { CfpFacade } from './application/facades/cfp.facade';
+import { CfpSignalStore } from './application/state/cfp.signal-store';
 import { CfpRepository } from './domain/ports/cfp.repository';
 import { CfpHttpAdapter } from './infrastructure/adapters/cfp-http.adapter';
 import { CfpInMemoryAdapter } from './infrastructure/adapters/cfp-in-memory.adapter';
-import { CfpSignalStore } from './application/state/cfp.signal-store';
-import { environment } from '../../environments/environment';
 
 export interface CfpProvidersOptions {
   useInMemory?: boolean;
