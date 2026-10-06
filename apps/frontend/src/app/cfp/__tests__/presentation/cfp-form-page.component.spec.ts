@@ -3,6 +3,8 @@ import { CfpFormPageComponent } from '../../presentation/containers/cfp-form-pag
 import { CfpFormComponent } from '../../presentation/presenters/cfp-form/cfp-form.component';
 import { cfpProviders } from '../../cfp.providers';
 import { SpeakerDTO } from '@cfp-plataform/shared-types';
+import { CfpFacade } from '../../application/facades/cfp.facade';
+import { vi } from 'vitest';
 
 describe('CfpFormPageComponent (Container + Presenter Integration)', () => {
   let component: CfpFormPageComponent;
@@ -234,4 +236,51 @@ describe('CfpFormPageComponent (Container + Presenter Integration)', () => {
       expect(component.isFormValid()).toBe(false);
     });
   });
+
+  describe('4.4 Notificações de sucesso e erro', () => {
+    it('deve exibir notificação de sucesso após submissão e ocultar ao emitir dismissed', () => {
+      component.onInputChanged({ field: 'nome', value: 'Maria Souza' });
+      component.onInputChanged({ field: 'email', value: 'maria@example.com' });
+      component.onInputChanged({ field: 'talkTitle', value: 'Testes de Integração' });
+      fixture.detectChanges();
+
+      component.onFormSubmitted();
+      fixture.detectChanges();
+
+      const notification = fixture.nativeElement.querySelector('app-cfp-notification');
+      expect(notification).toBeTruthy();
+      expect(component.lastSubmittedSpeaker()).toBeTruthy();
+
+      const dismissBtn = notification.querySelector('button') as HTMLButtonElement;
+      dismissBtn.click();
+      fixture.detectChanges();
+
+      expect(component.lastSubmittedSpeaker()).toBeNull();
+      expect(fixture.nativeElement.querySelector('app-cfp-notification')).toBeFalsy();
+    });
+
+    it('deve exibir notificação de erro quando houver erro na submissão e ocultar ao dispensar', () => {
+      const facade = TestBed.inject(CfpFacade);
+      const store = (facade as unknown as { store: { setError: (msg: string) => void } }).store;
+      store.setError('Erro ao se comunicar com o servidor');
+      fixture.detectChanges();
+
+      const notification = fixture.nativeElement.querySelector('app-cfp-notification');
+      expect(notification).toBeTruthy();
+      expect(component.submissionError()).toBe('Erro ao se comunicar com o servidor');
+
+      component.onDismissNotification();
+      fixture.detectChanges();
+
+      expect(component.submissionError()).toBeNull();
+      expect(fixture.nativeElement.querySelector('app-cfp-notification')).toBeFalsy();
+    });
+
+    it('não deve emitir nada nem se inscrever quando a submissão for inválida e sub$ for null', () => {
+      const emitSpy = vi.spyOn(component.submitted, 'emit');
+      component.onFormSubmitted();
+      expect(emitSpy).not.toHaveBeenCalled();
+    });
+  });
 });
+
