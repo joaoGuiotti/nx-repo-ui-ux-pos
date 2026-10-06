@@ -74,8 +74,10 @@
     },
     "test": {
       "executor": "@angular/build:unit-test",
+      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
       "options": {
-        "watch": false
+        "watch": false,
+        "coverage": true
       }
     },
     "serve-static": {
